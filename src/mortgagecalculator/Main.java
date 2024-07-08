@@ -1,6 +1,7 @@
 package mortgagecalculator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +24,13 @@ public class Main {
 		BigDecimal monthlyInterestRate = annualInterestRate.divide(amountOfMonthsInAYear, 2, RoundingMode.HALF_UP);
 		System.out.print("Period (Years):");
 		int periodInMonths = scan.nextInt() * 12;
-		System.out.println(monthlyInterestRate);
+		BigDecimal partOfFormula = monthlyInterestRate.add(BigDecimal.valueOf(1));
+		BigDecimal topHalf = partOfFormula.pow(periodInMonths);
+		BigDecimal bottomHalf = partOfFormula.pow(periodInMonths - 1);
+		BigDecimal mainPortionOfFormula = topHalf.divide(bottomHalf);
+		BigDecimal monthlyPayment = mainPortionOfFormula.multiply(BigDecimal.valueOf(principal));
+		System.out.println("Mortgage: " + NumberFormat.getCurrencyInstance().format(monthlyPayment));
+
 	}
 
 }
