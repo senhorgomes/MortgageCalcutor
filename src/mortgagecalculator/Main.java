@@ -25,6 +25,7 @@ public class Main {
 		System.out.print("Period (Years):");
 		int periodInMonths = scan.nextInt() * 12;
 		BigDecimal partOfFormula = monthlyInterestRate.add(BigDecimal.valueOf(1));
+		System.out.println(partOfFormula);
 		BigDecimal topHalf = partOfFormula.pow(periodInMonths);
 		BigDecimal bottomHalf = partOfFormula.pow(periodInMonths - 1);
 		BigDecimal mainPortionOfFormula = topHalf.divide(bottomHalf);
