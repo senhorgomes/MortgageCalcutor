@@ -12,7 +12,7 @@ public class Main {
 		//Period in years calculates monthly payments for that loan
 		//r = interest rate /12
 		//n= number of payments in a year → years * 12
-		//Monthly payment = Principal * ((1+r)^n/(1+r)^n-1)
+		//Monthly payment = Principal * ((1+r)^n/((1+r)^n)-1)
 //		Have user input principal amount of loan
 		//convert it to int and store it
 		System.out.print("Principal:");
@@ -25,10 +25,10 @@ public class Main {
 		System.out.print("Period (Years):");
 		int periodInMonths = scan.nextInt() * 12;
 		BigDecimal partOfFormula = monthlyInterestRate.add(BigDecimal.valueOf(1));
-		System.out.println(partOfFormula);
-		BigDecimal topHalf = partOfFormula.pow(periodInMonths);
-		BigDecimal bottomHalf = partOfFormula.pow(periodInMonths - 1);
-		BigDecimal mainPortionOfFormula = topHalf.divide(bottomHalf);
+		BigDecimal powerOfMonths = partOfFormula.pow(periodInMonths);
+		BigDecimal bottomHalf = powerOfMonths.subtract(BigDecimal.valueOf(1));
+		BigDecimal mainPortionOfFormula = powerOfMonths.divide(bottomHalf);
+		System.out.println(mainPortionOfFormula);
 		BigDecimal monthlyPayment = mainPortionOfFormula.multiply(BigDecimal.valueOf(principal));
 		System.out.println("Mortgage: " + NumberFormat.getCurrencyInstance().format(monthlyPayment));
 
