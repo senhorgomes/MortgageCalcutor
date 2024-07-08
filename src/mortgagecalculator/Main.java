@@ -17,7 +17,7 @@ public class Main {
 		int principal = scan.nextInt();
 		System.out.print("Annual interest rate:");
 		double annualInterestRate = scan.nextDouble();
-		
+		System.out.print(principal +" "+ annualInterestRate);
 	}
 
 }
