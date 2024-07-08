@@ -20,23 +20,23 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		int principal = scan.nextInt();
 		System.out.print("Annual interest rate:");
-		BigDecimal annualInterestRate = scan.nextBigDecimal();
-		BigDecimal amountOfMonthsInAYear = BigDecimal.valueOf(12);
-		BigDecimal monthlyInterestRate = annualInterestRate.divide(amountOfMonthsInAYear, 2, RoundingMode.HALF_UP);
+		double annualInterestRate = scan.nextDouble();
+		double monthlyInterestRate = annualInterestRate / 12;
 		
 		System.out.print("Period (Years):");
 		int periodInMonths = scan.nextInt() * 12;
-		System.out.println(periodInMonths);
-		BigDecimal partOfFormula = monthlyInterestRate.add(BigDecimal.valueOf(1));//(1+r)
+		//(1+r)
+		double partOfFormula = monthlyInterestRate + 1;
 		//partOfFormula^n which is periodInMonths
-		BigDecimal powerOfMonths = partOfFormula.pow(periodInMonths);//(1+r)^n
-		BigDecimal bottomHalf = powerOfMonths.subtract(BigDecimal.valueOf(1));//(1+r)^n)-1
-		BigDecimal mainPortionOfFormula = monthlyInterestRate.multiply(powerOfMonths);
-		mainPortionOfFormula.divide(bottomHalf, 2, RoundingMode.HALF_UP);
+		double powerOfMonths = Math.pow(partOfFormula, periodInMonths);//(1+r)^n
+		double bottomHalf = powerOfMonths - 1;//(1+r)^n)-1
+		
+		BigDecimal mainPortionOfFormula = BigDecimal.valueOf(monthlyInterestRate).multiply(BigDecimal.valueOf(powerOfMonths));
+		//mainPortionOfFormula/bottomHalf
+		BigDecimal divisionOfTwoParts = mainPortionOfFormula.divide(BigDecimal.valueOf(bottomHalf), 2, RoundingMode.HALF_UP);
 		System.out.println(mainPortionOfFormula);
-		BigDecimal monthlyPayment = mainPortionOfFormula.multiply(BigDecimal.valueOf(principal));
+		BigDecimal monthlyPayment = divisionOfTwoParts.multiply(BigDecimal.valueOf(principal));
 		System.out.println("Mortgage: " + NumberFormat.getCurrencyInstance().format(monthlyPayment));
-
 	}
 
 }
